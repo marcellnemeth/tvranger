@@ -1,0 +1,50 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  height: 100%;
+  border: 1px solid gainsboro;
+}
+.card img {
+  margin-bottom: 20px;
+}
+.card-bottom-section {
+  margin-top: auto;
+  align-self: flex-start;
+  padding: 10px 10px 20px 10px;
+}
+
+.card-house {
+  padding: 10px;
+  flex: 1 1 400px;
+}
+
+.button {
+  color: #11998e;
+  text-align: center;
+  padding: 0.625em 1.25em;
+  border: 1px solid #11998e;
+  border-radius: 0.35em;
+  cursor: pointer;
+}
+
+.button:hover {
+  color: #38ef7d;
+  border: 1px solid #38ef7d;
+}
+
+.icon-tv {
+  position: absolute;
+  right: -15px;
+  top: -10px;
+  font-size: 40px;
+  color: gainsboro;
+}
+
+.icon-tv:hover {
+  color: #38ef7d;
+}
+.active {
+  color: #11998e;
+}

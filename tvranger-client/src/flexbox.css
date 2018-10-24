@@ -1,0 +1,59 @@
+/* ================================= 
+  Media Queries
+==================================== */
+@media (max-width: 768px) {
+  .main-header,
+  .main-nav {
+    display: flex;
+  }
+  .main-header,
+  .main-nav {
+    flex-direction: column;
+    align-items: center;
+  }
+  .card {
+    max-width: 100%;
+    flex-basis: 100%;
+  }
+  .card-bottom-section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .card-bottom-section .button {
+    width: 100%;
+  }
+}
+@media (min-width: 769px) {
+  .main-header,
+  .main-nav,
+  .row,
+  .col {
+    display: flex;
+  }
+
+  .main-header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .col {
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .card-house {
+    max-width: 33.3333%;
+  }
+}
+
+@media (min-width: 1025px) {
+  .main-header {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .card-house {
+    max-width: 25%;
+  }
+}

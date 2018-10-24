@@ -1,0 +1,87 @@
+/* ---- Layout Containers ---- */
+
+.banner {
+  text-align: center;
+}
+.banner-wrapper {
+  background: #11998e; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #11998e,
+    #38ef7d
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #11998e, #38ef7d);
+  box-shadow: 0 4px 5px 1px rgba(0, 0, 0, 0.06);
+  margin-bottom: 48px;
+}
+.banner {
+  color: #fff;
+  padding: 3.2em 0;
+}
+.banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/* ---- Page Elements ---- */
+.app-logo {
+  width: 250px;
+  color: white;
+  -webkit-filter: drop-shadow(7px 7px 7px rgba(0, 0, 0, 0.4));
+  filter: drop-shadow(7px 7px 7px rgba(0, 0, 0, 0.4));
+}
+.app-logo:hover {
+}
+.search-box {
+  position: relative;
+  height: auto;
+  margin: 0;
+  width: 90%;
+}
+.search-input {
+  border-radius: 5px;
+  font-size: 16px;
+  font-family: 'Varela Round', sans-serif;
+  line-height: 1.6;
+  padding: 10px 12px;
+  width: 100%;
+  outline: none;
+  background: none;
+  border: 3px solid #fff;
+  outline: 0;
+  padding: 15px;
+  color: white;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5) inset, 0 1px 0 rgba(0, 0, 0, 0.5);
+}
+.search-logo {
+  position: absolute;
+  top: 12px;
+  right: 5%;
+  z-index: 20;
+  font-size: 2em;
+}
+.search-title {
+  text-shadow: 1px 1px black;
+}
+/* ================================= 
+  Media Queries
+==================================== */
+@media (min-width: 769px) {
+  .banner {
+    width: 90%;
+    margin: 0 auto;
+  }
+  .search-box {
+    width: 50%;
+    transition: width 0.5s;
+  }
+  .search-box:focus-within {
+    width: 60%;
+  }
+}
+@media (min-width: 1025px) {
+  .banner {
+    width: 80%;
+    max-width: 1150px;
+  }
+}

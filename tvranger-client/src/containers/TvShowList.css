@@ -1,0 +1,29 @@
+/* ---- Layout Containers ---- */
+.section {
+  padding: 10px;
+  flex: 1;
+}
+
+.card-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+/* ---- Page Elements ---- */
+
+/* ================================= 
+  Media Queries
+==================================== */
+
+@media (min-width: 769px) {
+  .section {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+@media (min-width: 1025px) {
+  .section {
+    width: 80%;
+    max-width: 1150px;
+  }
+}

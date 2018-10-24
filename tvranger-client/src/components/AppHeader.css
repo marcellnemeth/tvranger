@@ -1,0 +1,48 @@
+.main-header {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+.main-header-container {
+  box-shadow: 0 0 3px 3px gainsboro;
+}
+
+/* ---- Navigation ---- */
+.name {
+  font-size: 1.35em;
+  margin: 0;
+}
+
+.main-nav {
+  margin-top: 5px;
+}
+
+.main-nav a {
+  text-align: center;
+  display: block;
+  padding: 10px 15px;
+}
+.main-nav a {
+  font-size: 0.95em;
+  color: #11998e;
+  text-transform: uppercase;
+  margin-right: 5px;
+}
+.main-nav a:hover {
+  color: #38ef7d;
+}
+
+/* ================================= 
+  Media Queries
+==================================== */
+@media (min-width: 769px) {
+  .main-header {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+@media (min-width: 1025px) {
+  .main-header {
+    width: 80%;
+    max-width: 1150px;
+  }
+}
