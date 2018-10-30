@@ -13,4 +13,5 @@ import java.lang.annotation.Target;
 @Documented
 @AuthenticationPrincipal
 public @interface CurrentUser {
+
 }

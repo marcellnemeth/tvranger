@@ -24,7 +24,18 @@
   font-family: 'Varela Round', sans-serif;
   line-height: 1.6;
   color: #3a3a3a;
-  margin: 10px 0 10px 0;
+  margin: 0px 0 30px 0;
+}
+
+.login-input-error {
+  color: #ff4444;
+  margin-top: -30px;
+  margin-bottom: 4.667px;
+}
+
+.login-input-container {
+  position: relative;
+  height: 100%;
 }
 
 .login-input:focus,
@@ -33,9 +44,32 @@
   box-shadow: 0px 0px 2px 2px gainsboro;
 }
 
+.has-danger {
+  border: 2px solid#ff4444;
+}
+
+.has-danger:hover,
+.has-danger:focus {
+  border: 2px solid #ff4444;
+}
 .login-title {
   text-transform: uppercase;
   font-size: 1.35rem;
+}
+
+.error-icon {
+  position: absolute;
+  bottom: 50%;
+  right: 3%;
+  font-size: 1.5em;
+  color: #ff4444;
+}
+.success-icon {
+  position: absolute;
+  top: 20%;
+  right: 2%;
+  font-size: 1.5em;
+  color: #00c851;
 }
 
 .login-button {
@@ -55,8 +89,28 @@
 /* ================================= 
   Media Queries
 ==================================== */
+@media (max-width: 572px) {
+  .login-container {
+    width: 100%;
+  }
+  .error-icon {
+    font-size: 1.7em;
+  }
+  .success-icon {
+    font-size: 1.7em;
+  }
+}
 
-@media (min-width: 769px) {
+@media (min-width: 573px) {
+  .login-container {
+    width: 90%;
+  }
+  .login-card {
+    width: 80%;
+  }
+}
+
+@media (min-width: 860px) {
   .login-container {
     width: 90%;
   }

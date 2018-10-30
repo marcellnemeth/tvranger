@@ -19,62 +19,44 @@ class App extends Component {
         {
           id: 1,
           title: 'The 100',
-          img:
-            'http://static.tvmaze.com/uploads/images/original_untouched/151/377511.jpg'
+          img: 'https://image.tmdb.org/t/p/w342/wHIMMLFsk32wIzDmawWkYVbxFCS.jpg'
         },
         {
           id: 2,
           title: 'Stranger things',
-          img:
-            'http://static.tvmaze.com/uploads/images/original_untouched/132/330543.jpg'
+          img: 'https://image.tmdb.org/t/p/w500/lXS60geme1LlEob5Wgvj3KilClA.jpg'
         },
         {
           id: 3,
           title: 'The 100',
-          img:
-            'http://static.tvmaze.com/uploads/images/original_untouched/151/377511.jpg'
+          img: 'https://image.tmdb.org/t/p/w342/wHIMMLFsk32wIzDmawWkYVbxFCS.jpg'
         },
         {
           id: 4,
           title: 'Stranger things',
-          img:
-            'http://static.tvmaze.com/uploads/images/original_untouched/132/330543.jpg'
+          img: 'https://image.tmdb.org/t/p/w342/ooBGRQBdbGzBxAVfExiO8r7kloA.jpg'
         },
         {
           id: 5,
           title: 'The 100',
-          img:
-            'http://static.tvmaze.com/uploads/images/original_untouched/151/377511.jpg'
+          img: 'https://image.tmdb.org/t/p/w342/wHIMMLFsk32wIzDmawWkYVbxFCS.jpg'
         },
         {
           id: 6,
           title: 'Stranger things',
           img:
-            'http://static.tvmaze.com/uploads/images/original_untouched/132/330543.jpg'
+            'https://image.tmdb.org/t/p/w342//lXS60geme1LlEob5Wgvj3KilClA.jpg'
         },
         {
           id: 7,
           title: 'The 100',
-          img:
-            'http://static.tvmaze.com/uploads/images/original_untouched/151/377511.jpg'
+          img: 'https://image.tmdb.org/t/p/w342/ooBGRQBdbGzBxAVfExiO8r7kloA.jpg'
         },
         {
           id: 8,
           title: 'Stranger things',
           img:
-            'http://static.tvmaze.com/uploads/images/original_untouched/132/330543.jpg'
-        },
-        {
-          id: 9,
-          title: 'The 100',
-          img:
-            'http://static.tvmaze.com/uploads/images/original_untouched/151/377511.jpg'
-        },
-        {
-          id: 10,
-          title: 'Stranger things',
-          img:
-            'http://static.tvmaze.com/uploads/images/original_untouched/132/330543.jpg'
+            'https://image.tmdb.org/t/p/w342//lXS60geme1LlEob5Wgvj3KilClA.jpg'
         }
       ]
     };

@@ -33,6 +33,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
     try {
       String jsonWebtoken = getJsonWebtokenFromRequest(httpServletRequest);
 
+
       if(StringUtils.hasText(jsonWebtoken) && jwtTokenProvider.validateToken(jsonWebtoken)){
         Long userId = jwtTokenProvider.getUserIdFromJwt(jsonWebtoken);
 
@@ -40,6 +41,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+
 
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
       }
