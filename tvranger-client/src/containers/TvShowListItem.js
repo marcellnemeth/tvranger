@@ -7,6 +7,7 @@ import './TvShowListItem.css';
 class TvShowListItem extends Component {
   render() {
     const { show, onItemClick, activeItems } = this.props;
+    var profileLink = `/show/profile/${show.id}`;
     return (
       <div key={this.props.show.id} className="card-house">
         <div className="card">
@@ -20,7 +21,7 @@ class TvShowListItem extends Component {
           <img src={show.img} />
           <div className="card-bottom-section">
             <h3 className="show-title">{show.title}</h3>
-            <a className="button" href="#!">
+            <a className="button" href={profileLink}>
               Learn More
             </a>
           </div>

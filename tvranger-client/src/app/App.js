@@ -7,6 +7,7 @@ import Banner from '../components/Banner';
 import TvShowList from '../containers/TvShowList';
 import Login from '../user/Login';
 import Signup from '../user/Signup';
+import ShowProfile from '../components/ShowProfile';
 
 import '../app/App.css';
 
@@ -19,7 +20,8 @@ class App extends Component {
         {
           id: 1,
           title: 'The 100',
-          img: 'https://image.tmdb.org/t/p/w342/wHIMMLFsk32wIzDmawWkYVbxFCS.jpg'
+          img: 'https://image.tmdb.org/t/p/w342/wHIMMLFsk32wIzDmawWkYVbxFCS.jpg',
+          background_img: "https://image.tmdb.org/t/p/original/56v2KjBlU4XaOv9rVYEQypROD7P.jpg"
         },
         {
           id: 2,
@@ -102,6 +104,10 @@ class App extends Component {
                 />
               </div>
             )}
+          />
+          <Route
+            path="/show/profile/:id"
+            render={(props) => <ShowProfile shows={shows} {...props} />}
           />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />

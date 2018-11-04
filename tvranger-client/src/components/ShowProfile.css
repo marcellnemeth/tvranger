@@ -1,0 +1,51 @@
+.show-profile-wrapper {
+  display: flex;
+  flex: 1;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.show-profile-img {
+  opacity: 0.1;
+}
+
+.show-profile-background {
+  background-size: cover;
+  height: 1000px;
+  background-color: rgba(255, 255, 255, 0.7);
+  background-blend-mode: screen;
+  background-position: 50% 50%;
+}
+
+.show-profile-poster {
+  flex-grow:0;
+}
+
+.show-profile-desc {
+  color: grey;
+}
+.show-profile-details {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap:wrap;
+  
+}
+.show-profile-right-tab{
+  flex-grow:1;
+  flex-basis: 60%;
+  padding-left:20px;
+}
+
+@media (min-width: 769px) {
+  .show-profile-content {
+    width: 90%;
+    height: 100%;
+    margin: auto;
+  }
+}
+@media (min-width: 1025px) {
+  .show-profile-content {
+    width: 80%;
+    max-width: 1150px;
+  }
+}

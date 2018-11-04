@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import SearchInput from './SearchInput';
+import SearchInput from "./SearchInput";
 
-import AppLogo from '../assets/images/television.svg';
-import './Banner.css';
+import AppLogo from "../assets/images/television.svg";
+import "./Banner.css";
 
 const Banner = () => {
   return (
