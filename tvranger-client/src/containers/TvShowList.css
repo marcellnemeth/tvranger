@@ -1,14 +1,14 @@
-/* ---- Layout Containers ---- */
-.section {
-  padding: 10px;
-  flex: 1;
-}
 
 .card-wrapper {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
 }
+
+
+
+
+
 /* ---- Page Elements ---- */
 
 /* ================================= 

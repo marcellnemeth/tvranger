@@ -13,20 +13,22 @@ class Login extends Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
   handleFormSubmit(values) {
+  
     axios
-      .post('http://localhost:5000/api/auth/login', Object.assign({}, values))
-      .then(response => {
-        console.log(response);
-        localStorage.setItem('accessToken', response.data.accessToken);
-      })
-      .catch(function(error) {
-        if (error.response.status === 401) {
-          alert('You are not authorized');
-        } else {
-          console.log(error);
-        }
-      });
-    console.log(values);
+    .post('http://localhost:5000/api/auth/login', Object.assign({}, values))
+    .then(response => {
+      localStorage.setItem('accessToken', response.data.accessToken);
+      this.props.onLogin();
+    })
+    .catch(function(error) {
+      if (error.response.status === 401) {
+        alert('You are not authorized');
+      } else {
+        console.log(error);
+      }
+    });
+  
+    
   }
   render() {
     const { handleSubmit } = this.props;
@@ -95,9 +97,9 @@ const renderField = ({
 
 const validate = values => {
   const errors = {};
-  if (!values.username) {
-    errors.username = 'Required';
-  } else if (values.username.length > 20) {
+  if (!values.emailOrUsername) {
+    errors.emailOrUsername = 'Required';
+  } else if (values.emailOrUsername.length > 20) {
     errors.username = 'Must be 20 characters or less';
   }
   if (!values.password) {

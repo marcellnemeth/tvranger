@@ -8,61 +8,29 @@ import TvShowList from '../containers/TvShowList';
 import Login from '../user/Login';
 import Signup from '../user/Signup';
 import ShowProfile from '../components/ShowProfile';
+import { ScaleLoader } from 'react-spinners';
+
+import _ from 'lodash';
+
+import { connect } from 'react-redux';
 
 import '../app/App.css';
+import { fetchShow, getCurrentUser } from '../action';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       activeItems: [],
-      shows: [
-        {
-          id: 1,
-          title: 'The 100',
-          img: 'https://image.tmdb.org/t/p/w342/wHIMMLFsk32wIzDmawWkYVbxFCS.jpg',
-          background_img: "https://image.tmdb.org/t/p/original/56v2KjBlU4XaOv9rVYEQypROD7P.jpg"
-        },
-        {
-          id: 2,
-          title: 'Stranger things',
-          img: 'https://image.tmdb.org/t/p/w500/lXS60geme1LlEob5Wgvj3KilClA.jpg'
-        },
-        {
-          id: 3,
-          title: 'The 100',
-          img: 'https://image.tmdb.org/t/p/w342/wHIMMLFsk32wIzDmawWkYVbxFCS.jpg'
-        },
-        {
-          id: 4,
-          title: 'Stranger things',
-          img: 'https://image.tmdb.org/t/p/w342/ooBGRQBdbGzBxAVfExiO8r7kloA.jpg'
-        },
-        {
-          id: 5,
-          title: 'The 100',
-          img: 'https://image.tmdb.org/t/p/w342/wHIMMLFsk32wIzDmawWkYVbxFCS.jpg'
-        },
-        {
-          id: 6,
-          title: 'Stranger things',
-          img:
-            'https://image.tmdb.org/t/p/w342//lXS60geme1LlEob5Wgvj3KilClA.jpg'
-        },
-        {
-          id: 7,
-          title: 'The 100',
-          img: 'https://image.tmdb.org/t/p/w342/ooBGRQBdbGzBxAVfExiO8r7kloA.jpg'
-        },
-        {
-          id: 8,
-          title: 'Stranger things',
-          img:
-            'https://image.tmdb.org/t/p/w342//lXS60geme1LlEob5Wgvj3KilClA.jpg'
-        }
-      ]
+      term: '',
+      currentUser: null,
+      isAuthenticated: false,
+      isLoading: false
     };
     this.onItemClick = this.onItemClick.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+    this.loadCurrentUser = this.loadCurrentUser.bind(this);
   }
 
   onItemClick(itemId) {
@@ -70,7 +38,6 @@ class App extends Component {
       this.setState({ activeItems: this.state.activeItems.concat(itemId) });
     }
     if (this.state.activeItems.includes(itemId)) {
-      console.log('item id:' + itemId + 'items' + this.state.activeItems);
       let index = this.state.activeItems.indexOf(itemId);
 
       this.setState({
@@ -79,37 +46,104 @@ class App extends Component {
           ...this.state.activeItems.slice(index + 1)
         ]
       });
-      console.log(this.state.activeItems);
     }
   }
 
+  /*componentDidUpdate(nextProps){
+  if(nextProps.location.pathname !== this.props.location.pathname)
+  setTimeout(this.loadCurrentUser());
+}*/
+
+  componentDidMount() {
+    this.loadCurrentUser();
+  }
+  loadCurrentUser() {
+    this.setState({ isLoading: true });
+    this.props
+      .getCurrentUser()
+      .then(response => {
+        this.setState({
+          currentUser: response.payload.data,
+          isLoading: false,
+          isAuthenticated: true
+        });
+      })
+      .catch(error => {
+        this.setState({
+          isLoading: false
+        });
+      });
+
+    console.log(this.state.currentUser);
+  }
+
+  handleLogin() {
+    this.loadCurrentUser();
+
+    this.props.history.push('/');
+  }
+  handleLogout() {
+    localStorage.removeItem('accessToken');
+
+    this.setState({
+      currentUser: null,
+      isAuthenticated: false
+    });
+    this.props.history.push('/');
+  }
   render() {
-    const { activeItems, shows } = this.state;
-    console.log(activeItems);
+    const { activeItems } = this.state;
+
+    const imitateSearch = _.debounce(term => {
+      this.props.fetchShow(term, 1);
+      this.setState({ term: term });
+    }, 500);
+    if (this.state.isLoading) {
+      return (
+        <div>
+          <ScaleLoader
+            className="scaleLoader"
+            sizeUnit={'px'}
+            size={150}
+            color={'#11998e'}
+            loading={this.state.isLoading}
+          />
+        </div>
+      );
+    }
     return (
       <div className="wrapper">
-        <AppHeader />
+        <AppHeader
+          isAuthenticated={this.state.isAuthenticated}
+          currentUser={this.state.currentUser}
+          onLogout={this.handleLogout}
+        />
         <Switch>
           <Route
             exact
             path="/"
             render={props => (
-              <div>
-                <Banner />
-                <TvShowList
-                  activeItems={activeItems}
-                  onItemClick={this.onItemClick}
-                  shows={shows}
-                  {...props}
-                />
+              <div className="banner-showlist-container">
+                <Banner onSearchTermChange={imitateSearch} />
+                <div className="section">
+                  <TvShowList
+                    activeItems={activeItems}
+                    onItemClick={this.onItemClick}
+                    searchTerm={this.state.term}
+                    {...props}
+                  />
+                </div>
               </div>
             )}
           />
           <Route
             path="/show/profile/:id"
-            render={(props) => <ShowProfile shows={shows} {...props} />}
+            render={props => <ShowProfile {...props} />}
           />
-          <Route path="/login" component={Login} />
+          <Route
+            path="/login"
+            render={props => <Login onLogin={this.handleLogin} {...props} />}
+          />
           <Route path="/signup" component={Signup} />
         </Switch>
         <AppFooter />
@@ -118,4 +152,15 @@ class App extends Component {
   }
 }
 
-export default withRouter(App);
+function mapStateToProps(state) {
+  return {
+    currentUser: state.currentUser
+  };
+}
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { fetchShow, getCurrentUser }
+  )(App)
+);

@@ -8,6 +8,11 @@
 }
 .card img {
   margin-bottom: 20px;
+  
+}
+
+.card-img {
+  width:100%;
 }
 .card-bottom-section {
   margin-top: auto;
@@ -30,8 +35,8 @@
 }
 
 .button:hover {
-  color: #38ef7d;
-  border: 1px solid #38ef7d;
+  color: #30dc81;
+  border: 1px solid #30dc81;
 }
 
 .icon-tv {
@@ -47,4 +52,10 @@
 }
 .active {
   color: #11998e;
+}
+
+@media (max-width: 500px){
+  .card-img {
+    height:fit-content;
+  }
 }

@@ -1,28 +1,65 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import './AppHeader.css';
 
-const AppHeader = () => {
-  return (
-    <div className="main-header-container">
-      <header className="main-header">
-        <h1 className="name">
-          <a href="/">Tv Ranger</a>
-        </h1>
-        <ul className="main-nav">
-          <li>
-            <a href="/login">Login</a>
-          </li>
-          <li>
-            <a href="/signup">Signup</a>
-          </li>
-          <li>
-            <a href="#!">Third</a>
-          </li>
-        </ul>
-      </header>
-    </div>
-  );
-};
+class AppHeader extends Component {
+  handleLogout = () => {
+    this.props.onLogout();
+  }
+
+  renderHeader = () => {
+    var header;
+    console.log(this.props.currentUser);
+    if (this.props.currentUser) {
+      console.log("I was here");
+      return (
+        <header className="main-header">
+          <h1 className="name">
+            <Link to="/">Tv Ranger</Link>
+          </h1>
+          <ul className="main-nav">
+            <li>
+              <Link to="/" onClick={this.handleLogout}>Logout</Link>
+            </li>
+            <li>
+              <Link to="#!">Second</Link>
+            </li>
+            <li>
+              <a href="#!">Third</a>
+            </li>
+          </ul>
+        </header>
+      );
+    } else {
+      return (
+        <header className="main-header">
+          <h1 className="name">
+            <Link to="/">Tv Ranger</Link>
+          </h1>
+          <ul className="main-nav">
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+            <li>
+              <Link to="/signup">Signup</Link>
+            </li>
+            <li>
+              <a href="#!">Third</a>
+            </li>
+          </ul>
+        </header>
+      );
+    }
+  }
+  render() {
+   
+    return(
+      <div className="main-header-container" >
+        {this.renderHeader()}
+      </div>
+    );
+  }
+}
 
 export default AppHeader;

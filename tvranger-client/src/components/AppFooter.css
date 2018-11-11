@@ -7,8 +7,18 @@
   ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #11998e, #38ef7d);
   padding: 2em 0;
-  margin-top: 30px;
   color: white;
   box-shadow: 4px 4px 5px 1px rgba(0, 0, 0, 0.06) inset;
   text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.footer-text {
+  width: 400px;
+}
+.tmdb-logo {
+  height: 50px;
 }

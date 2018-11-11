@@ -1,52 +1,133 @@
 import React, { Component } from 'react';
-import _ from 'lodash';
+
+import NotFound from '../assets/images/notfound.jpg';
+import { connect } from 'react-redux';
+import { fetchShowWithId, fetchShowCredits } from '../action';
+import { Link, Route } from 'react-router-dom';
 
 import './ShowProfile.css';
-import TvShowList from '../containers/TvShowList';
+import ShowCredits from './ShowCredits';
+import Comment from './Comment';
 
 class ShowProfile extends Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    const { match, shows } = this.props;
-    let idToFind = parseInt(match.params.id, 10);
-    let foundShow = shows.find(elem => elem.id === idToFind);
-    console.log(shows);
-    console.log(foundShow);
-    return (
-      <div className="show-profile-wrapper">
+  renderWithCondition() {
+    if (!this.props.show.length == 0) {
+      const show = this.props.show[0];
+      let posterImg;
+      let backdropPath = `https://image.tmdb.org/t/p/original/${
+        show.backdrop_path
+      }`;
+
+      if (show.poster_path) {
+        let posterPath = `https://image.tmdb.org/t/p/w342/${show.poster_path}`;
+        posterImg = <img src={posterPath} className="show-profile-poster" alt="Show poster" />;
+      } else {
+        posterImg = <img src={NotFound} className="show-profile-poster" alt="Not found"/>;
+      }
+
+      return (
         <div
           className="show-profile-background"
           style={{
-            backgroundImage: `url(${
-              foundShow.background_img
-            }),linear-gradient(to right, #11998e, #38ef7d)`
+            backgroundImage: `url(${backdropPath}),linear-gradient(to right, #11998e, #38ef7d)`
           }}
         >
           <div className="show-profile-content">
             <div className="show-profile-details">
-              <img src={foundShow.img} className="show-profile-poster" />
+              {posterImg}
               <div className="show-profile-right-tab">
-                <p className="show-profile-desc">
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s, when an unknown
-                  printer took a galley of type and scrambled it to make a type
-                  specimen book. It has survived not only five centuries, but
-                  also the leap into electronic typesetting, remaining
-                  essentially unchanged. It was popularised in the 1960s with
-                  the release of Letraset sheets containing Lorem Ipsum
-                  passages, and more recently with desktop publishing software
-                  like Aldus PageMaker including versions of Lorem Ipsum.
-                </p>
+                <div className="show-profile-toolbar">
+                  <h2 className="sp-title">
+                    {show.original_name} ({show.first_air_date.substring(0, 4)})
+                  </h2>
+                  <div className="sp-utility-tools">
+                    <h1 className="rating-score">
+                      {show.vote_average}
+                      /10
+                    </h1>
+                    <div className="toolbar-icon-house">
+                      <i className="fas fa-heart toolbar-icon" />
+                    </div>
+                    <div className="toolbar-icon-house">
+                      <i className="fas fa-list toolbar-icon" />
+                    </div>
+                    <div className="toolbar-icon-house">
+                      <i className="fas fa-star-half-alt toolbar-icon" />
+                    </div>
+                  </div>
+                </div>
+                <div className="show-profile-genres">
+                  {show.genres
+                    ? show.genres.map(show => {
+                        return (
+                          <h3 key={show.id} className="show-profile-genre">
+                            {show.name}/
+                          </h3>
+                        );
+                      })
+                    : 'There is no available genre'}
+                </div>
+                <p className="show-profile-desc">{show.overview}</p>
               </div>
             </div>
           </div>
         </div>
+      );
+    } else {
+      return <div>Bullshit</div>;
+    }
+  }
+
+  renderBottomPart() {
+    const { show, credits, match } = this.props;
+
+    if (show && credits) {
+      return (
+        <div>
+          <div className="sp-bottom-header">
+            <header className="sp-main-header">
+              <ul className="sp-main-nav">
+                <li>
+                  <Link to={`${match.url}/credits`}>CAST</Link>
+                </li>
+                <li>
+                <Link to={`${match.url}/comments`}>COMMENTS</Link>
+                </li>
+                <li>
+                  <a href="#!">Third</a>
+                </li>
+              </ul>
+            </header>
+          </div>
+          <Route path={`${match.path}/credits`} component={ShowCredits} />
+          <Route path={`${match.path}/comments`} component={Comment} />
+        </div>
+      );
+    }
+  }
+
+  componentWillMount() {
+    this.props.fetchShowWithId(this.props.match.params.id);
+    this.props.fetchShowCredits(this.props.match.params.id);
+  }
+  render() {
+    return (
+      <div className="show-profile-wrapper">
+        {this.renderWithCondition()}
+        {this.renderBottomPart()}
       </div>
     );
   }
 }
 
-export default ShowProfile;
+function mapStateToProps(state) {
+  return {
+    show: state.oneShow,
+    credits: state.credits
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  { fetchShowWithId, fetchShowCredits }
+)(ShowProfile);

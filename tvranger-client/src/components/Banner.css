@@ -40,16 +40,16 @@
 }
 .search-input {
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 20px;
   font-family: 'Varela Round', sans-serif;
-  line-height: 1.6;
-  padding: 10px 12px;
+  padding:12px;
+  
   width: 100%;
   outline: none;
   background: none;
   border: 3px solid #fff;
   outline: 0;
-  padding: 15px;
+  
   color: white;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5) inset, 0 1px 0 rgba(0, 0, 0, 0.5);
 }

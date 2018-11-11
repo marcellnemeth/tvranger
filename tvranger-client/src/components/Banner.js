@@ -5,7 +5,7 @@ import SearchInput from "./SearchInput";
 import AppLogo from "../assets/images/television.svg";
 import "./Banner.css";
 
-const Banner = () => {
+const Banner = (props) => {
   return (
     <div className="banner-wrapper">
       <div className="banner">
@@ -14,9 +14,9 @@ const Banner = () => {
           data={AppLogo}
           className="app-logo"
           height={300}
-        />
+        >Page logo</object>
         <h1 className="search-title">Find your favourite...</h1>
-        <SearchInput />
+        <SearchInput onSearchTermChange={props.onSearchTermChange} />
       </div>
     </div>
   );
