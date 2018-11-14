@@ -1,4 +1,4 @@
-.login-container {
+.user-container {
   display: flex;
   flex: 1;
   margin-top: 20px;
@@ -6,7 +6,7 @@
   justify-content: center;
   align-items: center;
 }
-.login-card {
+.user-card {
   display: flex;
   flex-direction: column;
   border: 1px solid gainsboro;
@@ -15,7 +15,7 @@
   box-shadow: 0px 0px 2px 2px gainsboro;
 }
 
-.login-input {
+.user-input {
   width: 100%;
   padding: 0.85em;
   border: 2px solid gainsboro;
@@ -27,19 +27,19 @@
   margin: 0px 0 30px 0;
 }
 
-.login-input-error {
+.user-input-error {
   color: #ff4444;
   margin-top: -30px;
   margin-bottom: 4.667px;
 }
 
-.login-input-container {
+.user-input-container {
   position: relative;
   height: 100%;
 }
 
-.login-input:focus,
-.login-input:hover {
+.user-input:focus,
+.user-input:hover {
   border: 2px solid #11998e;
   box-shadow: 0px 0px 2px 2px gainsboro;
 }
@@ -52,7 +52,7 @@
 .has-danger:focus {
   border: 2px solid #ff4444;
 }
-.login-title {
+.user-title {
   text-transform: uppercase;
   font-size: 1.35rem;
 }
@@ -72,7 +72,7 @@
   color: #00c851;
 }
 
-.login-button {
+.user-button {
   margin-top: 30px;
   padding: .6em;
   border: 2px solid gainsboro;
@@ -86,17 +86,20 @@
   color: #3a3a3a;
 }
 
-.login-button:hover {
+.user-button:hover {
   box-shadow: 0px 0px 2px 2px gainsboro;
 }
 .signup-link {
+  color: blue;
+}
+.login-link {
   color: blue;
 }
 /* ================================= 
   Media Queries
 ==================================== */
 @media (max-width: 572px) {
-  .login-container {
+  .user-container {
     width: 100%;
   }
   .error-icon {
@@ -108,24 +111,24 @@
 }
 
 @media (min-width: 573px) {
-  .login-container {
+  .user-container {
     width: 90%;
   }
-  .login-card {
+  .user-card {
     width: 80%;
   }
 }
 
 @media (min-width: 860px) {
-  .login-container {
+  .user-container {
     width: 90%;
   }
-  .login-card {
+  .user-card {
     width: 60%;
   }
 }
 @media (min-width: 1025px) {
-  .login-container {
+  .user-container {
     width: 80%;
     max-width: 1150px;
   }

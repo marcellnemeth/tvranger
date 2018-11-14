@@ -7,11 +7,14 @@ import hu.thesis.tvranger.payload.response.ApiResponse;
 import hu.thesis.tvranger.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -21,6 +24,7 @@ public class CommentController {
     CommentRepository commentRepository;
 
     @PostMapping("/comment")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> createComment(@Valid @RequestBody CreateCommentRequest commentRequest){
 
         Comment comment = new Comment(commentRequest.getMessage(),commentRequest.getShowId());
@@ -30,7 +34,8 @@ public class CommentController {
         URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/api/comments/{commentId}").buildAndExpand(result.getId()).toUri();
 
-        return ResponseEntity.created(location).body(new ApiResponse(true,"The comment has been created"));
+        return ResponseEntity.created(location)
+                .body(new ApiResponse(true,"The comment has been created"));
 
     }
 
@@ -43,10 +48,12 @@ public class CommentController {
     }
 
     @GetMapping("/comment/show/{showId}")
-    public Comment getCommentByShowId(@PathVariable Long showId){
-        Comment comment = commentRepository.findByShowId(showId)
-                .orElseThrow(() -> new ResourceNotFoundException("Comment", "showId", showId));
+    public List<Comment> getCommentByShowId(@PathVariable Long showId){
+        List<Comment> comments = commentRepository.findAllByShowId(showId)
+                .orElseThrow(() -> new ResourceNotFoundException("Comments", "show id", showId));
 
-        return comment;
+        Collections.reverse(comments);
+
+        return comments;
     }
 }

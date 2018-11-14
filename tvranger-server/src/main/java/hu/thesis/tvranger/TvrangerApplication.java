@@ -10,17 +10,17 @@ import java.util.TimeZone;
 
 @SpringBootApplication
 @EntityScan(basePackageClasses = {
-    TvrangerApplication.class,
-    Jsr310JpaConverters.class
+        TvrangerApplication.class,
+        Jsr310JpaConverters.class
 })
 public class TvrangerApplication {
 
-	@PostConstruct
-  void init(){
-    TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-  }
+    @PostConstruct
+    void init() {
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(TvrangerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(TvrangerApplication.class, args);
+    }
 }

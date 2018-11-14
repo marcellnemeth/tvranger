@@ -1,5 +1,6 @@
 package hu.thesis.tvranger.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -13,18 +14,17 @@ import java.time.Instant;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(
-    value = {"createdAt", "updatedAt"},
-    allowGetters = true
-)
+
 public abstract class DateAudit implements Serializable {
 
   @CreatedDate
   @Column(nullable = false, updatable = false)
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
   private Instant createdAt;
 
   @LastModifiedDate
   @Column(nullable = false)
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
   private Instant updatedAt;
 
   public Instant getCreatedAt() {

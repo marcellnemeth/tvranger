@@ -1,13 +1,30 @@
+
+.comment {
+  border:2px solid gainsboro;
+  padding:10px;
+  border-radius:5px;
+  box-shadow: 0 0 1px 0px gainsboro;
+  margin-bottom:20px;
+}
+
+.comment-author{
+  margin-bottom:0;
+}
+
+.comment-created-date{
+  font-size: 10px;
+  color:grey;
+}
 @media (min-width: 768px) {
-    .comment {
-      width: 90%;
+    .comment-container {
+      width: 70%;
       margin: 50px auto;
     }
    
   }
   @media (min-width: 1024px) {
-    .comment {
-      width: 80%;
+    .comment-container {
+      width: 60%;
       max-width: 1150px;
 
   }

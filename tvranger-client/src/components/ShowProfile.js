@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import NotFound from '../assets/images/notfound.jpg';
 import { connect } from 'react-redux';
 import { fetchShowWithId, fetchShowCredits } from '../action';
-import { Link, Route } from 'react-router-dom';
+import { NavLink, Route } from 'react-router-dom';
 
 import './ShowProfile.css';
 import ShowCredits from './ShowCredits';
@@ -20,9 +20,17 @@ class ShowProfile extends Component {
 
       if (show.poster_path) {
         let posterPath = `https://image.tmdb.org/t/p/w342/${show.poster_path}`;
-        posterImg = <img src={posterPath} className="show-profile-poster" alt="Show poster" />;
+        posterImg = (
+          <img
+            src={posterPath}
+            className="show-profile-poster"
+            alt="Show poster"
+          />
+        );
       } else {
-        posterImg = <img src={NotFound} className="show-profile-poster" alt="Not found"/>;
+        posterImg = (
+          <img src={NotFound} className="show-profile-poster" alt="Not found" />
+        );
       }
 
       return (
@@ -38,7 +46,11 @@ class ShowProfile extends Component {
               <div className="show-profile-right-tab">
                 <div className="show-profile-toolbar">
                   <h2 className="sp-title">
-                    {show.original_name} ({show.first_air_date.substring(0, 4)})
+                    {show.original_name} (
+                    {show.first_air_date
+                      ? show.first_air_date.substring(0, 4)
+                      : 'Date not found'}
+                    )
                   </h2>
                   <div className="sp-utility-tools">
                     <h1 className="rating-score">
@@ -79,7 +91,7 @@ class ShowProfile extends Component {
   }
 
   renderBottomPart() {
-    const { show, credits, match } = this.props;
+    const { show, credits, match, isAuthenticated} = this.props;
 
     if (show && credits) {
       return (
@@ -88,19 +100,20 @@ class ShowProfile extends Component {
             <header className="sp-main-header">
               <ul className="sp-main-nav">
                 <li>
-                  <Link to={`${match.url}/credits`}>CAST</Link>
+                  <NavLink activeClassName="active" to={`${match.url}/credits`}>CAST</NavLink>
                 </li>
                 <li>
-                <Link to={`${match.url}/comments`}>COMMENTS</Link>
+                  <NavLink activeClassName="active" to={`${match.url}/comments`}>COMMENTS</NavLink>
                 </li>
                 <li>
-                  <a href="#!">Third</a>
+                  <a href="#!">Seasons</a>
                 </li>
               </ul>
             </header>
           </div>
           <Route path={`${match.path}/credits`} component={ShowCredits} />
-          <Route path={`${match.path}/comments`} component={Comment} />
+          <Route path={`${match.path}/comments`}
+          render= {props => <Comment isAuthenticated={this.props.isAuthenticated} {...props}/>}/>
         </div>
       );
     }

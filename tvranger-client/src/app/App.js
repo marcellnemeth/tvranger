@@ -30,6 +30,7 @@ class App extends Component {
     this.onItemClick = this.onItemClick.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.handleSignup = this.handleSignup.bind(this);
     this.loadCurrentUser = this.loadCurrentUser.bind(this);
   }
 
@@ -48,11 +49,6 @@ class App extends Component {
       });
     }
   }
-
-  /*componentDidUpdate(nextProps){
-  if(nextProps.location.pathname !== this.props.location.pathname)
-  setTimeout(this.loadCurrentUser());
-}*/
 
   componentDidMount() {
     this.loadCurrentUser();
@@ -90,6 +86,10 @@ class App extends Component {
       isAuthenticated: false
     });
     this.props.history.push('/');
+  }
+
+  handleSignup() {
+    this.props.history.push('login');
   }
   render() {
     const { activeItems } = this.state;
@@ -138,13 +138,21 @@ class App extends Component {
           />
           <Route
             path="/show/profile/:id"
-            render={props => <ShowProfile {...props} />}
+            render={props => (
+              <ShowProfile
+                isAuthenticated={this.state.isAuthenticated}
+                {...props}
+              />
+            )}
           />
           <Route
             path="/login"
             render={props => <Login onLogin={this.handleLogin} {...props} />}
           />
-          <Route path="/signup" component={Signup} />
+          <Route
+            path="/signup"
+            render={props => <Signup onSignup={this.handleSignup} {...props} />}
+          />
         </Switch>
         <AppFooter />
       </div>

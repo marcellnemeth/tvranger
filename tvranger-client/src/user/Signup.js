@@ -1,47 +1,62 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
 
-import './Signup.css';
+import './User.css';
+
+
 
 class Signup extends Component {
-  render() {
-    return (
-      <div className="signup-container">
-        <div className="signup-card">
-          <h2 className="signup-title">Sign Up</h2>
+  handleFormSubmit = (values) => {
+    axios
+    .post('http://localhost:5000/api/auth/signup', Object.assign({}, values))
+    .then(response => {
+      this.props.onSignup();
+    })
+    .catch(function(error) {
+      if (error.response.status === 401) {
+        alert('You are not authorized');
+      } else {
+        console.log(error);
+      }
+    });
+  };
 
-          <label htmlFor="username">Username:</label>
-          <input
+  render() {
+    const { handleSubmit } = this.props;
+    return (
+      <form className="user-container" onSubmit={handleSubmit(this.handleFormSubmit)}>
+        <div className="user-card">
+          <h2 className="user-title">Sign Up</h2>
+
+          <Field
             type="text"
             name="username"
-            className="signup-input"
-            placeholder="Username"
+            classname="user-input"
+            label="Username"
+            component={renderField}
           />
-          <label htmlFor="email">Email:</label>
-          <input
+
+          <Field
             type="email"
             name="email"
-            className="signup-input"
-            placeholder="Email"
+            classname="user-input"
+            label="Email"
+            component={renderField}
           />
-          <label htmlFor="password">Password:</label>
-          <input
+
+          <Field
             type="password"
             name="password"
-            className="signup-input"
-            placeholder="Password"
+            classname="user-input"
+            label="Password"
+            component={renderField}
           />
-          <label htmlFor="password">Password Confirmation:</label>
-          <input
-            type="password"
-            name=""
-            className="signup-input"
-            placeholder="Password"
-          />
-          <a href="#!" className="signup-button">
+          <button type="submit" className="user-button">
             Sign Up
-          </a>
-
+          </button>
           <p>
             Already registered?&nbsp;
             <Link to="/login" className="login-link">
@@ -49,9 +64,60 @@ class Signup extends Component {
             </Link>
           </p>
         </div>
-      </div>
+      </form>
     );
   }
 }
+const renderField = ({
+  input,
+  label,
+  type,
+  classname,
+  meta: { touched, error, warning }
+}) => (
+  <div>
+    <label>{label}</label>
+    <div>
+      <div className="user-input-container">
+        <input
+          {...input}
+          placeholder={label}
+          type={type}
+          className={classname + `${touched && error ? ' has-danger' : ''}`}
+        />
+        {touched && (!error && <i className="fas fa-check success-icon" />)}
+        {touched && (error && <i className="fas fa-times error-icon" />)}
+      </div>
+      {touched &&
+        ((error && <div className="user-input-error">{error}</div>) ||
+          (warning && <span>{warning}</span>))}
+    </div>
+  </div>
+);
 
-export default Signup;
+const validate = values => {
+  const errors = {};
+  if (!values.username) {
+    errors.username = 'Required';
+  } else if (values.username.length > 20) {
+    errors.username = 'Must be 20 characters or less';
+  }
+  if (!values.email) {
+    errors.email = 'Required';
+  } else if (values.email.length > 20) {
+    errors.email = 'Must be 20 characters or less';
+  }
+  if (!values.password) {
+    errors.password = 'Required';
+  } else if (values.password.length < 6) {
+    errors.password = 'Your password should be 6 or more characters';
+  } else if (values.password.length > 80) {
+    errors.password = 'Must be 80 characters or less';
+  }
+  return errors;
+};
+
+export default reduxForm({
+  form: 'signupForm',
+  validate
+})(connect(null)(Signup));

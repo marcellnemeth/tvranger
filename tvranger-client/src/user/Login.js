@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import axios from 'axios';
 
-import './Login.css';
+import './User.css';
 
 class Login extends Component {
   constructor(props) {
@@ -13,47 +13,44 @@ class Login extends Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
   handleFormSubmit(values) {
-  
     axios
-    .post('http://localhost:5000/api/auth/login', Object.assign({}, values))
-    .then(response => {
-      localStorage.setItem('accessToken', response.data.accessToken);
-      this.props.onLogin();
-    })
-    .catch(function(error) {
-      if (error.response.status === 401) {
-        alert('You are not authorized');
-      } else {
-        console.log(error);
-      }
-    });
-  
-    
+      .post('http://localhost:5000/api/auth/login', Object.assign({}, values))
+      .then(response => {
+        localStorage.setItem('accessToken', response.data.accessToken);
+        this.props.onLogin();
+      })
+      .catch(function(error) {
+        if (error.response.status === 401) {
+          alert('You are not authorized');
+        } else {
+          console.log(error);
+        }
+      });
   }
   render() {
     const { handleSubmit } = this.props;
     return (
       <form
-        className="login-container"
+        className="user-container"
         onSubmit={handleSubmit(this.handleFormSubmit)}
       >
-        <div className="login-card">
-          <h2 className="login-title">Login</h2>
+        <div className="user-card">
+          <h2 className="user-title">Login</h2>
           <Field
             name="emailOrUsername"
             type="text"
-            classname="login-input"
+            classname="user-input"
             label="Username"
             component={renderField}
           />
           <Field
             name="password"
             type="password"
-            classname="login-input"
+            classname="user-input"
             label="Password"
             component={renderField}
           />
-          <button type="submit" className="login-button">
+          <button type="submit" className="user-button">
             Login
           </button>
           <p>
@@ -78,7 +75,7 @@ const renderField = ({
   <div>
     <label>{label}</label>
     <div>
-      <div className="login-input-container">
+      <div className="user-input-container">
         <input
           {...input}
           placeholder={label}
@@ -89,7 +86,7 @@ const renderField = ({
         {touched && (error && <i className="fas fa-times error-icon" />)}
       </div>
       {touched &&
-        ((error && <div className="login-input-error">{error}</div>) ||
+        ((error && <div className="user-input-error">{error}</div>) ||
           (warning && <span>{warning}</span>))}
     </div>
   </div>
