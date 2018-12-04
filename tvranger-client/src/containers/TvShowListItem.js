@@ -36,7 +36,7 @@ class TvShowListItem extends Component {
           />
           {posterImg}
           <div className="card-bottom-section">
-            <h3 className="show-title">{show.original_name}</h3>
+            <h3 className="show-title">{show.name}</h3>
             <Link className="button" to={profileLink}>
               Learn more
             </Link>

@@ -20,11 +20,7 @@ class Login extends Component {
         this.props.onLogin();
       })
       .catch(function(error) {
-        if (error.response.status === 401) {
-          alert('You are not authorized');
-        } else {
-          console.log(error);
-        }
+        alert(error.response);
       });
   }
   render() {

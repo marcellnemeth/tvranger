@@ -74,11 +74,11 @@ public class AuthenticationController {
   @PostMapping("/signup")
   public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest){
     if(userRepository.existsByUsername(signupRequest.getUsername())){
-      return new ResponseEntity(new ApiResponse(false,"This username is already in use"),
+      return new ResponseEntity<>(new ApiResponse(false,"This username is already in use"),
           HttpStatus.BAD_REQUEST);
     }
     if(userRepository.existsByEmail(signupRequest.getEmail())){
-      return new ResponseEntity(new ApiResponse(false, "This email is already in use"),
+      return new ResponseEntity<>(new ApiResponse(false, "This email is already in use"),
           HttpStatus.BAD_REQUEST);
     }
 

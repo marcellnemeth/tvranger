@@ -1,0 +1,68 @@
+.wl-container {
+    flex:1; /* for the sticky footer */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding:20px;
+}
+
+.wl-card{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    height:100%;
+}
+.wl-card-left-part{
+    display: flex;
+    flex-grow:1;
+    flex-direction: column;
+    width:20%;
+    padding:10px;
+   
+}
+.wl-card-right-part{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: column;
+    height:100%;
+    flex-wrap:wrap;
+    flex-grow:1;
+    width:80%;
+    min-width:300px;
+    min-height:300px;
+    padding:10px;
+   
+}
+
+.wl-card-container {
+    width:70%;
+    box-shadow: 0 0 1px 1px gainsboro; 
+}
+
+.wl-button {
+    padding:15px 5px 15px 5px;
+    background: rgba(17, 153, 142, .4);
+    box-shadow: 0 0 1px 1px rgba(17, 153, 142, .6);
+    color:white;
+    text-transform:uppercase;
+}
+.wl-button:hover {
+    background: rgba(17, 153, 142, .9);
+}
+
+.wl-trash {
+    font-size: 2.5em;
+    margin-left:20px;
+}
+.wl-trash:hover {
+    color:#ef5350;
+}
+.wl-toolbar{
+    display:flex;
+    align-items: center;
+    padding:10px;
+
+}

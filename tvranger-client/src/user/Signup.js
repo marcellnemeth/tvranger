@@ -6,28 +6,26 @@ import { connect } from 'react-redux';
 
 import './User.css';
 
-
-
 class Signup extends Component {
-  handleFormSubmit = (values) => {
+  
+  handleFormSubmit = values => {
     axios
-    .post('http://localhost:5000/api/auth/signup', Object.assign({}, values))
-    .then(response => {
-      this.props.onSignup();
-    })
-    .catch(function(error) {
-      if (error.response.status === 401) {
-        alert('You are not authorized');
-      } else {
-        console.log(error);
-      }
-    });
+      .post('http://localhost:5000/api/auth/signup', Object.assign({}, values))
+      .then(() => {
+        this.props.onSignup();
+      })
+      .catch(function(error) {
+        alert(error.response);
+      });
   };
 
   render() {
     const { handleSubmit } = this.props;
     return (
-      <form className="user-container" onSubmit={handleSubmit(this.handleFormSubmit)}>
+      <form
+        className="user-container"
+        onSubmit={handleSubmit(this.handleFormSubmit)}
+      >
         <div className="user-card">
           <h2 className="user-title">Sign Up</h2>
 
@@ -104,7 +102,13 @@ const validate = values => {
   }
   if (!values.email) {
     errors.email = 'Required';
-  } else if (values.email.length > 20) {
+  } else if (
+    !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+      values.email
+    )
+  ) {
+    errors.email = 'Provide valid email';
+  } else if (values.email.length > 50) {
     errors.email = 'Must be 20 characters or less';
   }
   if (!values.password) {

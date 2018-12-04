@@ -4,15 +4,15 @@
   align-items: center;
   position: relative;
   height: 100%;
-  border: 1px solid gainsboro;
+  box-shadow: 0 0 2px 2px gainsboro;
 }
 .card img {
   margin-bottom: 20px;
-  
 }
 
 .card-img {
-  width:100%;
+  width: 100%;
+  height: auto;
 }
 .card-bottom-section {
   margin-top: auto;
@@ -54,8 +54,8 @@
   color: #11998e;
 }
 
-@media (max-width: 500px){
+@media (max-width: 500px) {
   .card-img {
-    height:fit-content;
+    height: fit-content;
   }
 }

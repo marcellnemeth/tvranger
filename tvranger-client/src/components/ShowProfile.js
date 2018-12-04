@@ -4,15 +4,26 @@ import NotFound from '../assets/images/notfound.jpg';
 import { connect } from 'react-redux';
 import { fetchShowWithId, fetchShowCredits } from '../action';
 import { NavLink, Route } from 'react-router-dom';
+import axios from 'axios';
+import { ScaleLoader } from 'react-spinners';
 
 import './ShowProfile.css';
 import ShowCredits from './ShowCredits';
 import Comment from './Comment';
 
 class ShowProfile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: false
+    };
+    this.addToWatchList = this.addToWatchList.bind(this);
+  }
+
   renderWithCondition() {
-    if (!this.props.show.length == 0) {
-      const show = this.props.show[0];
+    const show = this.props.show;
+    console.log(show);
+    if (show) {
       let posterImg;
       let backdropPath = `https://image.tmdb.org/t/p/original/${
         show.backdrop_path
@@ -61,7 +72,10 @@ class ShowProfile extends Component {
                       <i className="fas fa-heart toolbar-icon" />
                     </div>
                     <div className="toolbar-icon-house">
-                      <i className="fas fa-list toolbar-icon" />
+                      <i
+                        className="fas fa-list toolbar-icon"
+                        onClick={this.addToWatchList}
+                      />
                     </div>
                     <div className="toolbar-icon-house">
                       <i className="fas fa-star-half-alt toolbar-icon" />
@@ -70,10 +84,10 @@ class ShowProfile extends Component {
                 </div>
                 <div className="show-profile-genres">
                   {show.genres
-                    ? show.genres.map(show => {
+                    ? show.genres.map(genre => {
                         return (
                           <h3 key={show.id} className="show-profile-genre">
-                            {show.name}/
+                            {genre.name}/
                           </h3>
                         );
                       })
@@ -85,13 +99,31 @@ class ShowProfile extends Component {
           </div>
         </div>
       );
-    } else {
-      return <div>Bullshit</div>;
     }
   }
 
+  addToWatchList() {
+    let showId = parseInt(this.props.match.params.id, 10);
+    axios
+      .post('http://localhost:5000/api/watchlist', showId, {
+        headers: {
+          Authorization: localStorage.getItem('accessToken')
+            ? 'Bearer ' + localStorage.getItem('accessToken')
+            : null,
+          'Content-Type': 'application/json'
+        }
+      })
+      .catch(function(error) {
+        if (error.response.status === 401) {
+          alert('You are not authorized');
+        } else {
+          console.log(error);
+        }
+      });
+  }
+
   renderBottomPart() {
-    const { show, credits, match, isAuthenticated} = this.props;
+    const { show, credits, match, isAuthenticated } = this.props;
 
     if (show && credits) {
       return (
@@ -100,10 +132,17 @@ class ShowProfile extends Component {
             <header className="sp-main-header">
               <ul className="sp-main-nav">
                 <li>
-                  <NavLink activeClassName="active" to={`${match.url}/credits`}>CAST</NavLink>
+                  <NavLink activeClassName="active" to={`${match.url}/credits`}>
+                    CAST
+                  </NavLink>
                 </li>
                 <li>
-                  <NavLink activeClassName="active" to={`${match.url}/comments`}>COMMENTS</NavLink>
+                  <NavLink
+                    activeClassName="active"
+                    to={`${match.url}/comments`}
+                  >
+                    COMMENTS
+                  </NavLink>
                 </li>
                 <li>
                   <a href="#!">Seasons</a>
@@ -112,18 +151,41 @@ class ShowProfile extends Component {
             </header>
           </div>
           <Route path={`${match.path}/credits`} component={ShowCredits} />
-          <Route path={`${match.path}/comments`}
-          render= {props => <Comment isAuthenticated={this.props.isAuthenticated} {...props}/>}/>
+          <Route
+            path={`${match.path}/comments`}
+            render={props => (
+              <Comment
+                isAuthenticated={this.props.isAuthenticated}
+                {...props}
+              />
+            )}
+          />
         </div>
       );
     }
   }
 
   componentWillMount() {
-    this.props.fetchShowWithId(this.props.match.params.id);
+    this.setState({ isLoading: true });
+    this.props.fetchShowWithId(this.props.match.params.id).then(() => {
+      this.setState({ isLoading: false });
+    });
     this.props.fetchShowCredits(this.props.match.params.id);
   }
   render() {
+    if (this.state.isLoading) {
+      return (
+        <div className="show-profile-wrapper">
+          <ScaleLoader
+            className="scaleLoader"
+            sizeUnit={'px'}
+            size={150}
+            color={'#11998e'}
+            loading={this.state.isLoading}
+          />
+        </div>
+      );
+    }
     return (
       <div className="show-profile-wrapper">
         {this.renderWithCondition()}

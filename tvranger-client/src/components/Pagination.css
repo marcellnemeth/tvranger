@@ -1,42 +1,52 @@
 .paging {
-    display: flex;
-    justify-content: center;
-  }
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
 
-.paging-button{
-    margin:5px;
-    padding:7px 10px 7px 10px;
-    background:none;
-    cursor:pointer;
-    border:1px solid gainsboro;
-    outline:none;
-    font-family: 'Varela Round', sans-serif;
-  }
-  
-  .paging-button:hover {
-    border: 1px solid gray;
-  }
-.go-first{
+.paging-button {
+  margin: 5px;
+  padding: 7px 10px 7px 10px;
+  background: none;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 1px 1px gainsboro;
+  outline: none;
+  font-family: 'Varela Round', sans-serif;
+}
+
+.paging-button:hover {
+  box-shadow: 0 0 1px 1px #c6c6c6;
+}
+.go-first {
   position: relative;
-  margin-right:40px;
+  margin-right: 40px;
 }
 .go-last {
   position: relative;
-  margin-left:40px;
+  margin-left: 40px;
 }
-.go-first:before{
-    position:absolute;
-    content:"...";
-    right:-33px;
-}
-
-.go-last:before{
-    position:absolute;
-    content:".......";
-    left:-33px;
-
+.go-first:before {
+  position: absolute;
+  content: '.......';
+  right: -33px;
 }
 
-  .paging-button.active{
-    color:red;
-  }
+.go-last:before {
+  position: absolute;
+  content: '.......';
+  left: -33px;
+}
+
+.paging-button.active {
+  background: #c6c6c6;
+  color: white;
+}
+
+.previous-icon {
+  color: #c6c6c6;
+}
+
+.next-icon {
+  color: #c6c6c6;
+}

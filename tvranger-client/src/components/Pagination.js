@@ -14,8 +14,16 @@ class Pagination extends Component {
 
     const { interval, page, totalPage } = newProps;
     const startPage = page > interval ? page - interval : 1;
-    const endPage = (page + interval) > totalPage ? totalPage : (page + interval);
-    
+    const endPage = page + interval > totalPage ? totalPage : page + interval;
+
+    this.setState({ startPage, endPage, totalPage });
+  }
+
+  componentDidMount() {
+    const { interval, page, totalPage } = this.props;
+    const startPage = page > interval ? page - interval : 1;
+    const endPage = page + interval > totalPage ? totalPage : page + interval;
+
     this.setState({ startPage, endPage, totalPage });
   }
 
@@ -47,7 +55,7 @@ class Pagination extends Component {
 
     const firstPage =
       page - interval > 1 ? (
-        <button className="paging-button" onClick={this.goFirstPage}>
+        <button className="paging-button go-first" onClick={this.goFirstPage}>
           1
         </button>
       ) : null;
@@ -62,21 +70,27 @@ class Pagination extends Component {
     const nextPage =
       page === totalPage ? null : (
         <button className="paging-button" onClick={this.goNextPage}>
-          next
+          <i class="fas fa-forward next-icon"></i>
         </button>
       );
 
     const prevPage =
       page === 1 ? null : (
         <button className="paging-button" onClick={this.goPrevPage}>
-          prev
+          <i class="fas fa-backward previous-icon"></i>
         </button>
       );
 
     for (let i = startPage; i <= endPage; i++) {
-        console.log();
+      console.log();
       pages.push(
-        <button className={classnames("paging-button",{active: i === this.props.page})} key={i} onClick={this.onPagechange}>
+        <button
+          className={classnames('paging-button', {
+            active: i === this.props.page
+          })}
+          key={i}
+          onClick={this.onPagechange}
+        >
           {i}
         </button>
       );

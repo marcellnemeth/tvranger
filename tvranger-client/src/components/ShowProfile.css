@@ -42,7 +42,7 @@
 .show-profile-right-tab {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   flex-grow: 1;
   flex-basis: 60%;
   padding: 0 20px 0 20px;
@@ -120,7 +120,7 @@
 
 .sp-member-bottom {
   padding: 10px;
-  min-height:150px;
+  min-height: 150px;
 }
 
 .sp-member-character {
@@ -133,6 +133,7 @@
 
 .sp-profile-img {
   width: 100%;
+  max-height: 80%;
 }
 
 .sp-member-house {
@@ -155,7 +156,6 @@
 .sp-main-nav {
   display: flex;
   flex-direction: row;
-
 }
 
 .sp-main-nav a {
@@ -176,8 +176,8 @@
   justify-content: center;
 }
 
-.active{
-  color:red;
+.active {
+  color: red;
 }
 
 /* ================================= 
@@ -199,7 +199,7 @@
   .sp-main-header {
     width: 90%;
   }
-  .sp-main-header{
+  .sp-main-header {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
@@ -219,11 +219,10 @@
     max-width: 20%;
   }
   .sp-main-header {
-    
     width: 80%;
     max-width: 1150px;
   }
-  .sp-main-nav{
+  .sp-main-nav {
     flex-direction: row;
     justify-content: flex-start;
   }

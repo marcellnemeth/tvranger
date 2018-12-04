@@ -23,10 +23,10 @@ class AppHeader extends Component {
               <Link to="/" onClick={this.handleLogout}>Logout</Link>
             </li>
             <li>
-              <Link to="#!">Second</Link>
+              <Link to="/watchlist">watchlist</Link>
             </li>
             <li>
-              <a href="#!">Third</a>
+              <a href="#!">favourites</a>
             </li>
           </ul>
         </header>
@@ -43,9 +43,6 @@ class AppHeader extends Component {
             </li>
             <li>
               <Link to="/signup">Signup</Link>
-            </li>
-            <li>
-              <a href="#!">Third</a>
             </li>
           </ul>
         </header>

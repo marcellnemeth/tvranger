@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Link, Route } from 'react-router-dom';
 import CreateComment from './CreateComment';
 
@@ -11,25 +11,30 @@ import './Comment.css';
 class Comment extends Component {
   constructor(props) {
     super(props);
+    console.log('method run');
   }
+
+  /* componentDidUpdate(nextProps) {
+    if (nextProps.location.pathname !== this.props.location.pathname) {
+      this.props.fetchCommentsByShowId(this.props.match.params.id);
+      console.log("compon")
+    }
+  }*/
+
   componentDidMount() {
     this.props.fetchCommentsByShowId(this.props.match.params.id);
   }
 
-  componentDidUpdate(nextProps) {
-    if (nextProps.location.pathname !== this.props.location.pathname) {
-      this.props.fetchCommentsByShowId(this.props.match.params.id);
-    }
-  }
-
   render() {
+    const { match, comments } = this.props;
+
     return (
       <div className="comment-container">
         <div>
-          {this.props.comments.length
-            ? this.props.comments.map(comment => {
+          {comments.length
+            ? comments.map(comment => {
                 return (
-                  <div className="comment">
+                  <div className="comment" key={comment.id}>
                     <h5 className="comment-author">
                       @{comment.createdBy} at{' '}
                       <span className="comment-created-date">
@@ -43,16 +48,14 @@ class Comment extends Component {
               })
             : ''}
           {this.props.isAuthenticated ? (
-            <Link to={`${this.props.match.url}/create`}>Write a comment</Link>
+            <Link to={`${match.url}/create`}>Write a comment</Link>
           ) : (
             ''
           )}
         </div>
         <Route
-          path={`${this.props.match.path}/create`}
-          render={props => (
-            <CreateComment prevPath={this.props.match.url} {...props} />
-          )}
+          path={`${match.path}/create`}
+          render={props => <CreateComment prevPath={match.url} {...props} />}
         />
       </div>
     );
@@ -65,7 +68,14 @@ function mapStateToProps(state) {
   };
 }
 
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    { fetchCommentsByShowId: fetchCommentsByShowId },
+    dispatch
+  );
+}
+
 export default connect(
   mapStateToProps,
-  { fetchCommentsByShowId }
+  mapDispatchToProps
 )(Comment);

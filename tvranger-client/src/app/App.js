@@ -8,7 +8,10 @@ import TvShowList from '../containers/TvShowList';
 import Login from '../user/Login';
 import Signup from '../user/Signup';
 import ShowProfile from '../components/ShowProfile';
+import WatchList from '../components/WatchList';
 import { ScaleLoader } from 'react-spinners';
+
+import { fetchPopularShows} from '../action';
 
 import _ from 'lodash';
 
@@ -52,7 +55,16 @@ class App extends Component {
 
   componentDidMount() {
     this.loadCurrentUser();
+    this.props.fetchPopularShows(1);
+   
   }
+
+  componentDidUpdate(nextProps) {
+    if (nextProps.location.pathname !== this.props.location.pathname) {
+      nextProps.fetchPopularShows();
+   }
+  }
+
   loadCurrentUser() {
     this.setState({ isLoading: true });
     this.props
@@ -91,12 +103,17 @@ class App extends Component {
   handleSignup() {
     this.props.history.push('login');
   }
+
   render() {
     const { activeItems } = this.state;
-
+ 
     const imitateSearch = _.debounce(term => {
+      if(term != '' && term != ' '){
       this.props.fetchShow(term, 1);
       this.setState({ term: term });
+      }else {
+        this.props.fetchPopularShows(1);
+      }
     }, 500);
     if (this.state.isLoading) {
       return (
@@ -153,6 +170,7 @@ class App extends Component {
             path="/signup"
             render={props => <Signup onSignup={this.handleSignup} {...props} />}
           />
+          <Route path="/watchlist" component={WatchList}></Route>
         </Switch>
         <AppFooter />
       </div>
@@ -169,6 +187,6 @@ function mapStateToProps(state) {
 export default withRouter(
   connect(
     mapStateToProps,
-    { fetchShow, getCurrentUser }
+    { fetchShow, getCurrentUser, fetchPopularShows }
   )(App)
 );
