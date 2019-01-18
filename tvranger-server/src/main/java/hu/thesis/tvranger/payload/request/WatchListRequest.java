@@ -4,17 +4,18 @@ import javax.validation.constraints.NotNull;
 
 public class WatchListRequest {
     @NotNull
-    private Long showId;
+    private int showId;
 
-    public WatchListRequest(Long showId){
+
+    public WatchListRequest(@NotNull int showId) {
         this.showId = showId;
     }
 
-    public Long getShowId() {
+    public int getShowId() {
         return showId;
     }
 
-    public void setShowId(Long showId) {
+    public void setShowId(int showId) {
         this.showId = showId;
     }
 }

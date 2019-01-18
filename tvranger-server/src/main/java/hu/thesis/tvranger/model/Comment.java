@@ -1,11 +1,13 @@
 package hu.thesis.tvranger.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Comment extends UserDateAudit {
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,14 +20,19 @@ public class Comment extends UserDateAudit {
     @NotNull
     private Long showId;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
+    private User user;
 
     public Comment(){
 
     }
 
-    public Comment(@NotBlank String message, @NotNull Long showId) {
+    public Comment(@NotBlank String message, @NotNull Long showId, User user) {
         this.message = message;
         this.showId = showId;
+        this.user = user;
     }
 
     public Long getId() {
@@ -50,5 +57,13 @@ public class Comment extends UserDateAudit {
 
     public void setShowId(Long showId) {
         this.showId = showId;
+    }
+
+    public User getUser(){
+        return user;
+    }
+
+    public void setUser(User user){
+        this.user = user;
     }
 }

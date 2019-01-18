@@ -26,4 +26,5 @@ public class CreateCommentRequest {
     public void setShowId(Long showId) {
         this.showId = showId;
     }
+
 }

@@ -1,27 +1,32 @@
 package hu.thesis.tvranger.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class WatchList extends UserDateAudit {
+public class WatchList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
-    private Long showId;
+    private int showId;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
+    private User user;
 
     public WatchList(){
 
     }
 
-    public WatchList(@NotNull Long showId) {
+    public WatchList(@NotNull int showId, User user) {
         this.showId = showId;
+        this.user = user;
     }
 
     public Long getId() {
@@ -32,11 +37,19 @@ public class WatchList extends UserDateAudit {
         this.id = id;
     }
 
-    public Long getShowId() {
+    public int getShowId() {
         return showId;
     }
 
-    public void setShowId(Long showId) {
+    public void setShowId(int showId) {
         this.showId = showId;
+    }
+
+    public User getUser(){
+        return user;
+    }
+
+    public void setUser(User user){
+        this.user = user;
     }
 }

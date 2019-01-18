@@ -1,13 +1,16 @@
 package hu.thesis.tvranger.controller;
 
+import hu.thesis.tvranger.dto.WatchListDto;
 import hu.thesis.tvranger.exceptions.ResourceNotFoundException;
 import hu.thesis.tvranger.model.User;
 import hu.thesis.tvranger.model.WatchList;
 import hu.thesis.tvranger.payload.request.WatchListRequest;
 import hu.thesis.tvranger.payload.response.ApiResponse;
+import hu.thesis.tvranger.repository.UserRepository;
 import hu.thesis.tvranger.repository.WatchListRepository;
 import hu.thesis.tvranger.security.CurrentUser;
 import hu.thesis.tvranger.security.UserPrincipal;
+import hu.thesis.tvranger.service.WatchListService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,36 +32,36 @@ public class WatchListController {
     @Autowired
     WatchListRepository watchListRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    WatchListService watchListService;
+
     @PostMapping("/watchlist")
     public ResponseEntity<?> createWatchList(@Valid @RequestBody WatchListRequest watchListRequest,
                                              @CurrentUser UserPrincipal userPrincipal) {
 
+        WatchListDto watchListDto = watchListService.createWatchList(watchListRequest,userPrincipal);
 
-        Optional<List<WatchList>> ws = watchListRepository.findByShowId(watchListRequest.getShowId());
+        if(watchListDto == null) {
+            return ResponseEntity.badRequest().body(new ApiResponse(false, "This show is already on the watchlist"));
+        }else {
 
-        if (ws.isPresent()) {
-            for (WatchList item : ws.get()) {
-                if (item.getCreatedBy().equals(userPrincipal.getUsername())) {
-                    return ResponseEntity.badRequest().body(new ApiResponse(false, "This show is already on the watchlist"));
-                }
-            }
+            URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path("/api/watchlists/{watchListId}").buildAndExpand(watchListDto.getId()).toUri();
 
+            return ResponseEntity.created(location).body(new ApiResponse(true, "The watchlist has been created"));
         }
-        WatchList watchList = new WatchList(watchListRequest.getShowId());
-        WatchList result = watchListRepository.save(watchList);
-        URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/api/watchlists/{watchListId}").buildAndExpand(result.getId()).toUri();
-
-        return ResponseEntity.created(location).body(new ApiResponse(true, "The watchlist has been created"));
-
     }
 
     @GetMapping("/watchlist/all")
     public ResponseEntity<?> findAll(@CurrentUser UserPrincipal user) {
-        List<WatchList> userWatchlist = watchListRepository.findAllByCreatedBy(user.getUsername());
-        if(userWatchlist.size() == 0){
+        List<WatchListDto> userWatchlistDto = watchListService.getWatchListsByUser(user);
+
+        if(userWatchlistDto.size() == 0){
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok().body(userWatchlist);
+        return ResponseEntity.ok().body(userWatchlistDto);
     }
 }

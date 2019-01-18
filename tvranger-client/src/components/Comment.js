@@ -36,7 +36,7 @@ class Comment extends Component {
                 return (
                   <div className="comment" key={comment.id}>
                     <h5 className="comment-author">
-                      @{comment.createdBy} at{' '}
+                      @{comment.username} at{' '}
                       <span className="comment-created-date">
                         {comment.createdAt}
                       </span>

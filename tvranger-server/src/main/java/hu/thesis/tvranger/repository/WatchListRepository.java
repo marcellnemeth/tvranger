@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface WatchListRepository extends JpaRepository<WatchList, Long> {
 
-    List<WatchList> findAllByCreatedBy(String createdBy);
+    List<WatchList> findAllByUserId(long userId);
 
-    Optional<List<WatchList>> findByShowId(Long showId);
+    Optional<List<WatchList>> findByShowId(int showId);
 }
